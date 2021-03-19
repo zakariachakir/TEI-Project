@@ -1,0 +1,23 @@
+{% extends "application.html" %}
+{% block content %}
+
+<section class="jumbotron text-center" style="margin-top: 3%">
+  <div class="container">
+    <h1 class="jumbotron-heading">Votre Fichier XML-TEI</h1>
+    <p class="lead text-muted">Transformé avec succès</p>
+    <p>
+      <a href="{{url_for("downloadFile")}}" class="btn btn-primary my-2" style="width: 35%" download="xml_tei.xml">Download</a>
+    </p>
+  </div>
+
+</section>
+<footer class="bg-light text-center text-lg-start" style="margin-top: 12.5%">
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: #dbe2e9;">
+    © 2021 Copyright:
+    <a class="text-dark" href="">Réalisé par CHAKIR ET BOUALI</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+
+{% endblock %}

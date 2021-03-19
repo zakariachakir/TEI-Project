@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 import os
+import random
+import string
 from xml.dom import minidom
 import json as JS
 from flask import Flask, render_template, request, redirect, send_file
@@ -9,28 +11,17 @@ import xml.etree.ElementTree as ET
 
 from form_contact import ContactForm, csrf
 
-mail = Mail()
+def randStr(chars = string.ascii_uppercase + string.digits, N=10):
+	return ''.join(random.choice(chars) for _ in range(N))
 
 app = Flask(__name__)
-
+name = randStr(N=4)+'.xml'
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 csrf.init_app(app)
 
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'zikochakir@gmail.com'
-app.config['MAIL_PASSWORD'] = 'Chakirzakaria19980511'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
 
-mail.init_app(app)
-
-@app.route('/')
-def index():
-    return render_template('views/home/index.html')
-
-@app.route('/contact', methods=['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET'])
 def contact():
     form = ContactForm()
     if form.validate_on_submit():        
@@ -38,14 +29,16 @@ def contact():
         print(request.form['message'])
         print('-------------------------')
         #send_message(request.form)
-
-        data = request.form['message']
+        # with open("C:/Users/aypax/PycharmProjects/contact-form-python-flask/result.json", "w") as json_file:
+        #     JS.dump(request.form['message'], json_file)
+        # data = JS.load(json_file)
+        data = JS.loads(request.form['message'])
         root = ET.Element("TEI")
         root.set("xmlns", "http://www.tei-c.org/ns/1.0")
         teiheader = ET.SubElement(root, "teiHeader")
         filedesc = ET.SubElement(teiheader, "fileDesc")
         titlestmt = ET.SubElement(filedesc, "titleStmt")
-        ET.SubElement(titlestmt, "title").text = data["TEI"]["teiHeader"]["fileDesc"]["titleStmt"]["title"]
+        ET.SubElement(titlestmt, "title").text = data['TEI']['teiHeader']['fileDesc']['titleStmt']['title']
         pubstmt = ET.SubElement(filedesc, "publicationStmt")
         ET.SubElement(pubstmt, "p").text = data["TEI"]["teiHeader"]["fileDesc"]["publicationStmt"]["p"]
         source = ET.SubElement(filedesc, "sourceDesc")
@@ -58,35 +51,35 @@ def contact():
         ET.SubElement(div, "head").text = data["TEI"]["text"]["front"]["div"]["head"]
         table = ET.SubElement(div, "table")
         ET.SubElement(table, "head").text = data["TEI"]["text"]["front"]["div"]["table"]["head"]
-        row1 = ET.SubElement(table, "row")
-        row1.set("cols", "2")
-        ET.SubElement(row1, "cell").text = data["TEI"]["text"]["front"]["div"]["table"]["row"][0]["cell"][0]
-        ET.SubElement(row1, "cell").text = data["TEI"]["text"]["front"]["div"]["table"]["row"][0]["cell"][1]
-        row2 = ET.SubElement(table, "row")
-        ET.SubElement(row2, "cell").text = data["TEI"]["text"]["front"]["div"]["table"]["row"][1]["cell"]
-        row3 = ET.SubElement(table, "row")
-        ET.SubElement(row3, "cell").text = data["TEI"]["text"]["front"]["div"]["table"]["row"][2]["cell"][0]
-        ET.SubElement(row3, "cell").text = data["TEI"]["text"]["front"]["div"]["table"]["row"][2]["cell"][1]
+        row = ET.SubElement(table, "row")
+        for i in range(0, int(request.form['nombre'])):
+            j = 0
+            ET.SubElement(row, "cell").text = data["TEI"]["text"]["front"]["div"]["table"]["row"][i]["cell"][j]
+            ET.SubElement(row, "cell").text = data["TEI"]["text"]["front"]["div"]["table"]["row"][i]["cell"][j+1]
         body = ET.SubElement(text, "body")
         ET.SubElement(body, "p").text = data["TEI"]["text"]["body"]["p"]
 
         xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
-        with open("result1.xml", "w") as f:
+        with open("C:/Users/aypax/PycharmProjects/contact-form-python-flask/"+name, "w") as f:
              f.write(xmlstr)
-        return redirect('/success')
+       # downloadFile(name)
+        return render_template('views/success/success.html', name=name)
 
-    return render_template('views/contacts/contact.html', form=form)
+    return render_template('views/accueil/accueil.html', form=form)
 
 @app.route('/download')
 def downloadFile ():
-    path ="C:/Users/aypax/PycharmProjects/contact-form-python-flask/voleur.xml"
+    path ="C:/Users/aypax/PycharmProjects/contact-form-python-flask/"+name
     #For windows you need to use drive name [ex: F:/Example.pdf]
-    return send_file(path, as_attachment=True)
+    return send_file(path,attachment_filename='xml_tei.xml', as_attachment=True)
+
 
 @app.route('/success')
 def success():
-    return render_template('views/home/index.html')
+    return render_template('views/success/success.html')
 
+def randStr(chars = string.ascii_uppercase + string.digits, N=10):
+	return ''.join(random.choice(chars) for _ in range(N))
 # def send_message(message):
 #     print(message.get('name'))
 #
