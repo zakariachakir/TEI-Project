@@ -1,7 +1,6 @@
-# contact-form-python-flask
-Contact form and send mail with Python e Flask
-
+# Projet-Json to Xml_TEI python-flask
 ### Skills
+Transformer un input Json à un fichier XML respectant la norme TEI
 
 * Python
 * Flask
@@ -11,16 +10,14 @@ Contact form and send mail with Python e Flask
 
 
 ```shell
-pip3 install Flask
-pip3 install Flask-WTF
-pip3 install Flask-Mail
+pip install Flask
+pip install Flask-WTF
 
-cd /contact-form-python-flask
+cd /Projet_Tei
 
-python3 app.py flask run
+python app.py flask run
 
 #run localhost:5000
 
 ```
 
-http://gilcierweb.com.br

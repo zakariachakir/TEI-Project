@@ -1,11 +1,9 @@
-#!/usr/bin/python3
 import os
 import random
 import string
 from xml.dom import minidom
 import json as JS
-from flask import Flask, render_template, request, redirect, send_file
-from flask_mail import Mail
+from flask import Flask, render_template, request, send_file
 import xml.etree.ElementTree as ET
 
 
@@ -28,10 +26,6 @@ def contact():
         print('-------------------------')
         print(request.form['message'])
         print('-------------------------')
-        #send_message(request.form)
-        # with open("C:/Users/aypax/PycharmProjects/contact-form-python-flask/result.json", "w") as json_file:
-        #     JS.dump(request.form['message'], json_file)
-        # data = JS.load(json_file)
         data = JS.loads(request.form['message'])
         root = ET.Element("TEI")
         root.set("xmlns", "http://www.tei-c.org/ns/1.0")
@@ -60,18 +54,16 @@ def contact():
         ET.SubElement(body, "p").text = data["TEI"]["text"]["body"]["p"]
 
         xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
-        with open("C:/Users/aypax/PycharmProjects/contact-form-python-flask/"+name, "w") as f:
+        with open("C:/Users/aypax/PycharmProjects/Projet_Tei/Generated_xml_files/"+name, "w") as f:
              f.write(xmlstr)
-       # downloadFile(name)
         return render_template('views/success/success.html', name=name)
 
     return render_template('views/accueil/accueil.html', form=form)
 
 @app.route('/download')
 def downloadFile ():
-    path ="C:/Users/aypax/PycharmProjects/contact-form-python-flask/"+name
-    #For windows you need to use drive name [ex: F:/Example.pdf]
-    return send_file(path,attachment_filename='xml_tei.xml', as_attachment=True)
+    path ="C:/Users/aypax/PycharmProjects/Projet_Tei/Generated_xml_files/"+name
+    return send_file(path, attachment_filename='xml_tei.xml', as_attachment=True)
 
 
 @app.route('/success')
@@ -80,14 +72,6 @@ def success():
 
 def randStr(chars = string.ascii_uppercase + string.digits, N=10):
 	return ''.join(random.choice(chars) for _ in range(N))
-# def send_message(message):
-#     print(message.get('name'))
-#
-#     msg = Message(message.get('subject'), sender = message.get('email'),
-#             recipients = ['id1@gmail.com'],
-#             body= message.get('message')
-#     )
-#     mail.send(msg)
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug=True)
