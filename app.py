@@ -7,7 +7,7 @@ from flask import Flask, render_template, request, send_file
 import xml.etree.ElementTree as ET
 
 
-from form_contact import ContactForm, csrf
+from form import ContactForm, csrf
 
 def randStr(chars = string.ascii_uppercase + string.digits, N=10):
 	return ''.join(random.choice(chars) for _ in range(N))
