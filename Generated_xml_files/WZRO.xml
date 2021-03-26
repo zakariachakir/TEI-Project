@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>لا تعتذر عما فعلت</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>تاريخ الإنشاء :12 أغسطس 2008</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>دار نشر المعرفة</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <front>
+         <div type="sommaire">
+            <head>الفهرس</head>
+            <table>
+               <head>العناوين</head>
+               <row>
+                  <cell>I المحور </cell>
+                  <cell>في شهوة الإيقاع</cell>
+                  <cell>II المحور </cell>
+                  <cell> طريق الساحل </cell>
+                  <cell>III المحور </cell>
+                  <cell>لا كما يفعل السائح الأجنبي</cell>
+                  <cell>IV المحور </cell>
+                  <cell>بيت من الشعر/ بيت الجنوبي</cell>
+                  <cell>V المحور</cell>
+                  <cell>كحادثة غامضة</cell>
+               </row>
+            </table>
+         </div>
+      </front>
+      <body>
+         <p> : ديوان لا تعتذر عما فعلت تأليف محمود درويش، درويش الحاضر في غيابه... من ذا الذي تماهت فيه اللغة مثلك! أيّها الملحمي المطلّ كالأساطير من علياء مجازك
+              ... لتقتل رتابة اللحظة و نشاز إيقاع الهواء المكسّر بموسيقى شهوتك المرتّبة في نغم العميق من سماع القلب موسيقيّة هنا الكلمات, ناعمة كجسد ينبت التفّاح, وصادمة أحيانا كفجأة البرق في مطر رتيب, و كما يغلب عليه : قاتلة أيضا  </p>
+      </body>
+   </text>
+</TEI>
